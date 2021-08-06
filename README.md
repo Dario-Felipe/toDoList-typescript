@@ -1,4 +1,4 @@
-# Welcome to Loginplate by Dário Felipe
+# Welcome to my basic To Do List by Dário Felipe
 
 This project was built with TypeScript for studies in itself.
 I'm so glad for made it. Let's get started? Steps to run this app bellow:
