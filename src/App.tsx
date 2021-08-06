@@ -1,4 +1,5 @@
 import { useState, SyntheticEvent, ChangeEvent } from 'react';
+import Form from './components/Form';
 
 export function App() {
   interface TaskProps {
@@ -37,30 +38,14 @@ export function App() {
 
   return (
     <>
-      {console.log(toDoList)}
-      <form onSubmit={addTask}>
-        <div>
-          <label htmlFor="taskName">Task Name:</label>
-          <input
-            type="text"
-            name="taskName"
-            placeholder="Ex.: Comer"
-            value={task.taskName}
-            onChange={handleInput}
-          />
-        </div>
-        <div>
-          <label htmlFor="taskTime">Task Time:</label>
-          <input
-            type="number"
-            name="taskTime"
-            placeholder="Ex.: 4"
-            value={task.taskTime}
-            onChange={handleInput}
-          />
-        </div>
-        <button type="submit">Add Task</button>
-      </form>
+      <Form task={task} addTask={addTask} handleInput={handleInput} />
+      <ul>
+        {toDoList.map(item => (
+          <li key={task.taskName}>
+            Task Name: {item.taskName}, Task Time: {item.taskTime}
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
