@@ -1,12 +1,13 @@
 import { useState, SyntheticEvent, ChangeEvent } from 'react';
 import Form from './components/Form';
+import List from './components/List';
+
+export interface TaskProps {
+  taskName: string;
+  taskTime: number;
+}
 
 export function App() {
-  interface TaskProps {
-    taskName: string;
-    taskTime: number;
-  }
-
   const [task, setTask] = useState<TaskProps>({
     taskName: '',
     taskTime: 0,
@@ -39,13 +40,7 @@ export function App() {
   return (
     <>
       <Form task={task} addTask={addTask} handleInput={handleInput} />
-      <ul>
-        {toDoList.map(item => (
-          <li key={task.taskName}>
-            Task Name: {item.taskName}, Task Time: {item.taskTime}
-          </li>
-        ))}
-      </ul>
+      <List toDoList={toDoList} />
     </>
   );
 }
