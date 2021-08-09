@@ -1,15 +1,12 @@
-import { ChangeEvent, SyntheticEvent } from 'react';
+import { TaskInfo, TaskManager } from '../../App';
 
-interface TaskProps {
-  task: {
-    taskName: string;
-    taskTime: number;
-  };
-  addTask: (event: SyntheticEvent) => void;
-  handleInput: (event: ChangeEvent<HTMLInputElement>) => void;
+interface FormProps {
+  task: TaskInfo;
+  addTask: TaskManager['addTask'];
+  handleInput: TaskManager['handleInput'];
 }
 
-const Form = ({ task, addTask, handleInput }: TaskProps) => {
+const Form = ({ task, addTask, handleInput }: FormProps) => {
   return (
     <>
       <form onSubmit={addTask}>
@@ -17,9 +14,9 @@ const Form = ({ task, addTask, handleInput }: TaskProps) => {
           <label htmlFor="taskName">Task Name:</label>
           <input
             type="text"
-            name="taskName"
+            name="name"
             placeholder="Ex.: Comer"
-            value={task.taskName}
+            value={task.name}
             onChange={handleInput}
           />
         </div>
@@ -27,9 +24,9 @@ const Form = ({ task, addTask, handleInput }: TaskProps) => {
           <label htmlFor="taskTime">Task Time:</label>
           <input
             type="number"
-            name="taskTime"
+            name="time"
             placeholder="Ex.: 4"
-            value={task.taskTime}
+            value={task.time}
             onChange={handleInput}
           />
         </div>

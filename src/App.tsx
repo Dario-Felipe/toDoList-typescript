@@ -2,33 +2,38 @@ import { useState, SyntheticEvent, ChangeEvent } from 'react';
 import Form from './components/Form';
 import List from './components/List';
 
-export interface TaskProps {
-  taskName: string;
-  taskTime: number;
+export interface TaskInfo {
+  name: string;
+  time: number;
+}
+
+export interface TaskManager {
+  addTask?: (event: SyntheticEvent) => void;
+  handleInput?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export function App() {
-  const [task, setTask] = useState<TaskProps>({
-    taskName: '',
-    taskTime: 0,
+  const [toDoList, setToDoList] = useState<TaskInfo[]>([]);
+  const [task, setTask] = useState<TaskInfo>({
+    name: '',
+    time: 0,
   });
-  const [toDoList, setToDoList] = useState<TaskProps[]>([]);
 
   const addTask = (event: SyntheticEvent) => {
     event.preventDefault();
 
-    if (task.taskName.length === 0) {
+    if (task.name.length === 0) {
       return alert('Task Name cannot be empty');
     }
 
-    if (task.taskTime <= 0) {
+    if (task.time <= 0) {
       return alert('Task Time cannot be lower or as 0');
     }
 
-    setToDoList([...toDoList, { ...task, taskTime: Number(task.taskTime) }]);
+    setToDoList([...toDoList, { ...task, time: Number(task.time) }]);
     setTask({
-      taskName: '',
-      taskTime: 0,
+      name: '',
+      time: 0,
     });
     return alert('The task has been added!');
   };
