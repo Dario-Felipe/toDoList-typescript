@@ -1,8 +1,9 @@
-import { useState, SyntheticEvent, ChangeEvent } from 'react';
+import { useState, SyntheticEvent, ChangeEvent, MouseEvent } from 'react';
 import Form from './components/Form';
 import List from './components/List';
 
 export interface TaskInfo {
+  id: number;
   name: string;
   time: number;
 }
@@ -10,11 +11,14 @@ export interface TaskInfo {
 export interface TaskManager {
   addTask?: (event: SyntheticEvent) => void;
   handleInput?: (event: ChangeEvent<HTMLInputElement>) => void;
+  removeTask: (event: MouseEvent<HTMLButtonElement>, id: number) => void;
 }
 
 export function App() {
   const [toDoList, setToDoList] = useState<TaskInfo[]>([]);
+  const [countID, setCountID] = useState(1);
   const [task, setTask] = useState<TaskInfo>({
+    id: countID,
     name: '',
     time: 0,
   });
@@ -30,12 +34,24 @@ export function App() {
       return alert('Task Time cannot be lower or as 0');
     }
 
-    setToDoList([...toDoList, { ...task, time: Number(task.time) }]);
+    setToDoList([
+      ...toDoList,
+      { ...task, id: countID, time: Number(task.time) },
+    ]);
+    setCountID(countID + 1);
     setTask({
+      id: countID,
       name: '',
       time: 0,
     });
     return alert('The task has been added!');
+  };
+
+  const removeTask = (
+    event: MouseEvent<HTMLButtonElement>,
+    id: number,
+  ): void => {
+    setToDoList(toDoList.filter(item => item.id !== id && item));
   };
 
   const handleInput = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -45,7 +61,7 @@ export function App() {
   return (
     <>
       <Form task={task} addTask={addTask} handleInput={handleInput} />
-      <List toDoList={toDoList} />
+      <List toDoList={toDoList} removeTask={removeTask} />
     </>
   );
 }
